@@ -63,7 +63,8 @@ to communicate with the MCP Clients. Have a look at the `steadybit-mcp.log` file
     ```
 
 - Test with the MCP inspector:
-    - ```bash
+    - Launch the inspector:
+      ```bash
       npx @modelcontextprotocol/inspector java -jar target/mcp-1.0.0-SNAPSHOT.jara -e API_URL=https://platform.steadybit.com/api -e API_TOKEN=123456
       ```
     - Logs can be found in `steadybit-mcp.log` located in the folder where you started the inspector.
