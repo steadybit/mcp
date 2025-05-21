@@ -4,17 +4,11 @@
 
 package com.steadybit.mcp.tools;
 
-import com.steadybit.api.model.ExperimentAO;
-import com.steadybit.api.model.ExperimentSummariesAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.web.client.RestClient;
 
 public class ExperimentTools {
-
-    private static final Logger log = LoggerFactory.getLogger(ExperimentTools.class);
 
     private final RestClient restClient;
 
@@ -23,7 +17,7 @@ public class ExperimentTools {
     }
 
     @Tool(name = "list_experiment_designs", description = "Get a list of experiments designed in Steadybit")
-    public ExperimentSummariesAO getExperimentDesigns(@ToolParam(description = "The key of a team") String team) {
+    public String getExperimentDesigns(@ToolParam(description = "The key of a team") String team) {
         return this.restClient.get()
                 .uri(uri -> {
                     uri.path("/experiments");
@@ -33,14 +27,14 @@ public class ExperimentTools {
                     return uri.build();
                 })
                 .retrieve()
-                .body(ExperimentSummariesAO.class);
+                .body(String.class);
     }
 
     @Tool(name = "get_experiment_design_summary", description = "Get a summary of an experiment design in Steadybit")
-    public ExperimentAO getExperimentDesignSummary(@ToolParam(description = "The key of the experiment design") String experimentKey) {
+    public String getExperimentDesignSummary(@ToolParam(description = "The key of the experiment design") String experimentKey) {
         return this.restClient.get()
                 .uri("/experiments/" + experimentKey)
                 .retrieve()
-                .body(ExperimentAO.class);
+                .body(String.class);
     }
 }

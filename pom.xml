@@ -107,38 +107,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.12.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>https://platform.dev.steadybit.com/api/spec/platform</inputSpec>
-                            <generatorName>java</generatorName>
-                            <configOptions>
-                                <useJakartaEe>true</useJakartaEe>
-                                <openApiNullable>false</openApiNullable>
-                                <sourceFolder>/</sourceFolder>
-                            </configOptions>
-                            <output>${project.build.directory}/generated-sources/api</output>
-                            <generateModels>true</generateModels>
-                            <generateApis>false</generateApis>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <generateModelTests>false</generateModelTests>
-                            <generateModelDocumentation>false</generateModelDocumentation>
-                            <generateApiTests>false</generateApiTests>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <library>resttemplate</library>
-                            <apiPackage>com.steadybit.api</apiPackage>
-                            <modelPackage>com.steadybit.api.model</modelPackage>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
