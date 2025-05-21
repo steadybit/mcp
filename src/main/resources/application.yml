@@ -1,0 +1,19 @@
+spring:
+  main:
+    banner-mode: off
+    web-application-type: none
+  application:
+    name: steadybit-mcp-server
+  ai:
+    mcp:
+      server:
+        name: steadybit
+        version: "@project.version@"
+        stdio: true
+
+logging:
+  pattern:
+    console: ""
+  file:
+    name: "steadybit-mcp.log"
+
