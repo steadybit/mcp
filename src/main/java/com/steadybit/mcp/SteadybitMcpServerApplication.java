@@ -4,9 +4,7 @@
 
 package com.steadybit.mcp;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.steadybit.mcp.tools.ExperimentTools;
-import com.steadybit.mcp.utils.SteadybitApiResponseHandler;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
@@ -27,19 +25,13 @@ public class SteadybitMcpServerApplication {
     }
 
     @Bean
-    public RestClient restClient(BuildProperties buildProperties, ApiProperties apiProperties, SteadybitApiResponseHandler steadybitApiResponseHandler) {
+    public RestClient restClient(BuildProperties buildProperties, ApiProperties apiProperties) {
         return RestClient.builder()
                 .baseUrl(apiProperties.getUrl())
-                .defaultStatusHandler(steadybitApiResponseHandler)
                 .defaultHeader("Accept", "application/json")
                 .defaultHeader("User-Agent", "steadybit-mcp/" + buildProperties.getVersion())
                 .defaultHeader("Authorization", "accessToken " + apiProperties.getToken())
                 .build();
-    }
-
-    @Bean
-    public SteadybitApiResponseHandler steadybitApiErrorHandler(ObjectMapper objectMapper) {
-        return new SteadybitApiResponseHandler(objectMapper);
     }
 
     @Bean
