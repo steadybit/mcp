@@ -15,6 +15,41 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
         - `experimentKey` (string): The experiment key to get
     - Returns: A summary of an experiment design
 
+## Setup
+
+You need to have a Steadybit account and an API token. You can create an API token in the Steadybit platform under
+"Settings" → "API Access Tokens". Both token types, `Admin` or `Team` are supported.
+
+### Supported ENV-Variables
+
+- `API_TOKEN`: The API token to use for authentication. This is required.
+- `API_URL`: The URL of the Steadybit API. Default is `https://platform.steadybit.com/api`.
+
+### Usage with [Claude Desktop](https://claude.ai/download)
+
+- Settings -> Developer -> Edit
+- Add the following JSON to the file, make sure to replace `<your-api-token>` with your actual API token.:
+  ```
+  {
+    "mcpServers": {
+      "steadybit": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e",
+          "API_TOKEN",
+          "ghcr.io/steadybit/mcp:latest",
+        ],
+        "env": {
+          "API_TOKEN": "<your-api-token>",
+        }
+      }
+    }
+  }
+  ```
+
 ## Development
 
 Please note that there will be no logging to the console when running the MCP Server. The server uses STDIO transport
@@ -28,9 +63,10 @@ to communicate with the MCP Clients. Have a look at the `steadybit-mcp.log` file
     ```
 
 - Test with the MCP inspector:
-    ```bash
-    npx @modelcontextprotocol/inspector java -jar target/mcp-1.0.0-SNAPSHOT.jara -e API_URL=https://platform.steadybit.com/api -e API_TOKEN=123456
-    ```
+    - ```bash
+      npx @modelcontextprotocol/inspector java -jar target/mcp-1.0.0-SNAPSHOT.jara -e API_URL=https://platform.steadybit.com/api -e API_TOKEN=123456
+      ```
+    - Logs can be found in `steadybit-mcp.log` located in the folder where you started the inspector.
 
 - Use in [Claude Desktop](https://claude.ai/download)
     - Settings -> Developer -> Edit
@@ -57,11 +93,53 @@ to communicate with the MCP Clients. Have a look at the `steadybit-mcp.log` file
     - MCP-Server-Logs can be found in `~/Library/Logs/Claude/steadybit-mcp.log`, depending on the `LOGGING_FILE_NAME`
       you set in the `env` section.
 
+### Building and testing the Docker image
+
+- Build the image:
+  ```bash
+  docker build -t steadybit/mcp -f Dockerfile . 
+  ```
+
+- Create a file `config.json` with the following content:
+  ```json
+  {
+    "mcpServers": {
+      "steadybit": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e",
+          "API_TOKEN",
+          "-e",
+          "API_URL",
+          "steadybit/mcp"
+        ],
+        "env": {
+          "API_TOKEN": "123456",
+          "API_URL":"https://platform.steadybit.com/api"
+        }
+      }
+    }
+  }
+  ```
+
+- Run the inspector:
+  ```bash
+  npx @modelcontextprotocol/inspector --config config.json --server steadybit
+  ```
+
 ### Building a native image
 
 - Install GraalVM 24.0.1 with the following command using sdkman:
     ```bash
     sdk install java 24.0.1-graalce
+    ```
+
+- Use the GraalVM version:
+    ```bash
+    sdk use java 24.0.1-graalce
     ```
 
 - Build the native image:
