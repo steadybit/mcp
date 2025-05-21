@@ -15,6 +15,6 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY target/mcp-1.0.0-SNAPSHOT.jar app.jar
+COPY target/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
