@@ -93,3 +93,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            VERSION=${{ github.ref_type == 'tag' && github.ref || '' }}
+            REVISION=${{ github.sha }}
