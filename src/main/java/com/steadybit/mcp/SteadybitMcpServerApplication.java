@@ -4,6 +4,7 @@
 
 package com.steadybit.mcp;
 
+import com.steadybit.mcp.tools.ExecutionTools;
 import com.steadybit.mcp.tools.ExperimentTools;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
@@ -40,7 +41,12 @@ public class SteadybitMcpServerApplication {
     }
 
     @Bean
-    public ToolCallbackProvider weatherTools(ExperimentTools experimentTools) {
-        return MethodToolCallbackProvider.builder().toolObjects(experimentTools).build();
+    public ExecutionTools executionTools(RestClient restClient) {
+        return new ExecutionTools(restClient);
+    }
+
+    @Bean
+    public ToolCallbackProvider weatherTools(ExperimentTools experimentTools, ExecutionTools executionTools) {
+        return MethodToolCallbackProvider.builder().toolObjects(experimentTools, executionTools).build();
     }
 }

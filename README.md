@@ -9,11 +9,29 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
     - Required inputs:
         - `team` (string): The team key to list experiment designs for
     - Returns: List of experiment designs with their key and name
-2. `get-experiment-design-summary`
-    - Get a summary of an experiment design
+2. `get_experiment_design`
+    - Get an experiment design
     - Required inputs:
         - `experimentKey` (string): The experiment key to get
-    - Returns: A summary of an experiment design
+    - Returns: The experiment design
+3. `list_experiment_executions`
+    - List experiment executions
+    - Optional inputs:
+        - `experiment` (list of string): Filter by one or more experiment keys
+        - `environment` (list of string): Filter by one or more environment names
+        - `team` (list of string): Filter by one or more team keys
+        - `state` (list of string): Filter by one or more result states, possible values
+          are [CREATED, PREPARED, RUNNING, FAILED, CANCELED, COMPLETED, ERRORED]
+        - `from` (string, ISO8601 date): Filter by creation date from
+        - `to` (string, ISO8601 date): Filter by creation date to
+        - `page` (number): Number of the requested page, default is 0
+        - `pageSize` (number): Results per page, defaults to 50, maximum 100 is allowed
+    - Returns: The experiment design
+4. `get_experiment_execution`
+    - Get an experiment execution
+    - Required inputs:
+        - `executionId` (number): The execution id to get
+    - Returns: The experiment execution
 
 ## Setup
 

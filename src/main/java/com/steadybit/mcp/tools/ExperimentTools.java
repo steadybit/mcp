@@ -16,7 +16,7 @@ public class ExperimentTools {
         this.restClient = restClient;
     }
 
-    @Tool(name = "list_experiment_designs", description = "Get a list of experiments designed in Steadybit")
+    @Tool(name = "list_experiment_designs", description = "Get a list of experiments designed")
     public String getExperimentDesigns(@ToolParam(description = "The key of a team") String team) {
         return this.restClient.get()
                 .uri(uri -> {
@@ -30,8 +30,8 @@ public class ExperimentTools {
                 .body(String.class);
     }
 
-    @Tool(name = "get_experiment_design_summary", description = "Get a summary of an experiment design in Steadybit")
-    public String getExperimentDesignSummary(@ToolParam(description = "The key of the experiment design") String experimentKey) {
+    @Tool(name = "get_experiment_design", description = "Get an experiment design")
+    public String getExperimentDesign(@ToolParam(description = "The key of the experiment design") String experimentKey) {
         return this.restClient.get()
                 .uri("/experiments/" + experimentKey)
                 .retrieve()
