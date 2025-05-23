@@ -32,11 +32,14 @@ class ExecutionToolsTest {
     private RestClient.RequestBodyUriSpec requestBodyUriSpec;
 
     @Mock
+    private RestClient.RequestHeadersUriSpec requestHeadersUriSpec;
+
+    @Mock
     private RestClient.RequestBodySpec requestBodySpec;
 
     @Mock
     private RestClient.ResponseSpec responseSpec;
-    
+
     private ExecutionTools executionTools;
 
     @BeforeEach
@@ -84,6 +87,20 @@ class ExecutionToolsTest {
         assertEquals(to, capturedBody.get("requestedTo"));
         assertEquals(1, capturedBody.get("page"));
         assertEquals(25, capturedBody.get("size"));
+    }
+
+    @Test
+    void testGetExperimentExecution() {
+        int executionId = 123;
+        String expectedResponse = "{\"id\":123,\"steps\":[]}";
+
+        when(this.restClient.get()).thenReturn(this.requestHeadersUriSpec);
+        when(this.requestHeadersUriSpec.uri("/experiments/executions/123?fields=steps")).thenReturn(this.requestHeadersUriSpec);
+        when(this.requestHeadersUriSpec.retrieve()).thenReturn(this.responseSpec);
+        when(this.responseSpec.body(String.class)).thenReturn(expectedResponse);
+
+        String result = this.executionTools.getExperimentExecution(executionId);
+        assertEquals(expectedResponse, result);
     }
 
 }
