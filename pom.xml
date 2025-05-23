@@ -36,6 +36,13 @@
         <java.version>21</java.version>
         <spring-ai.version>1.0.0-RC1</spring-ai.version>
         <revision>1.0.0-SNAPSHOT</revision>
+        <!-- Sonarcloud-->
+        <sonar.organization>steadybit</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/**/target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
     </properties>
 
     <dependencies>
