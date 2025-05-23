@@ -48,8 +48,7 @@ jobs:
           curl --compressed https://static.snyk.io/cli/latest/snyk-linux -o snyk
           chmod +x ./snyk
           mv ./snyk /usr/local/bin/
-          snyk monitor --all-projects --prune-repeated-subdependencies --exclude=storybook,storybook-static --target-reference=${{ github.ref_name }} -- -s .github/workflows/maven-settings.xml
-        env:
+          snyk monitor --all-projects --prune-repeated-subdependencies --target-reference=${{ github.ref_name }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
