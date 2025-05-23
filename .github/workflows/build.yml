@@ -49,6 +49,7 @@ jobs:
           chmod +x ./snyk
           mv ./snyk /usr/local/bin/
           snyk monitor --all-projects --prune-repeated-subdependencies --target-reference=${{ github.ref_name }}
+        env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
