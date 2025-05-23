@@ -42,6 +42,18 @@ jobs:
             mvn clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
           fi
 
+      - name: "[tag] Synk monitor: maven"
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          curl --compressed https://downloads.snyk.io/cli/stable/snyk-linux-arm64 -o snyk
+          chmod +x ./snyk
+          mv ./snyk /usr/local/bin/
+          snyk monitor --all-projects --prune-repeated-subdependencies --exclude=storybook,storybook-static --target-reference=${{ github.ref_name }} -- -s .github/workflows/maven-settings.xml
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
@@ -100,3 +112,13 @@ jobs:
           build-args: |
             VERSION=${{ github.ref_type == 'tag' && github.ref || '' }}
             REVISION=${{ github.sha }}
+
+      - name: "Snyk monitor docker image"
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: snyk/actions/docker@master
+        with:
+          image: "${{ env.REGISTRY }}/steadybit/mcp:${{ github.ref_name }}"
+          args: --file=Dockerfile --target-reference=${{ github.ref_name }} --username=${{ github.actor }} --password=${{ secrets.GITHUB_TOKEN }}
+          command: monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
