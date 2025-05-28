@@ -32,6 +32,12 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
     - Required inputs:
         - `executionId` (number): The execution id to get
     - Returns: The experiment execution
+5. `list_actions`
+    - List of currently registered actions
+    - Optional inputs:
+        - `page` (number): Number of the requested page, default is 0
+        - `pageSize` (number): Results per page, defaults to 50, maximum 100 is allowed
+    - Returns: List of actions
 
 ## Setup
 

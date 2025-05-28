@@ -19,12 +19,12 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class ExperimentToolsTest {
+class ActionToolsTest {
 
     private static final WireMockServer wireMock = new WireMockServer(wireMockConfig().dynamicPort());
 
     @Autowired
-    private ExperimentTools experimentTools;
+    private ActionTools actionTools;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -48,45 +48,28 @@ class ExperimentToolsTest {
     }
 
     @Test
-    void getExperimentDesigns() {
+    void getActions() {
         // Given
-        String teamKey = "ADM";
         String expectedResponse = "TEST_RESPONSE";
+        Integer page = 1;
+        Integer pageSize = 25;
 
-        wireMock.stubFor(get(urlPathEqualTo("/experiments"))
-                .withQueryParam("team", equalTo(teamKey))
+        wireMock.stubFor(get(urlPathEqualTo("/actions"))
+                .withQueryParam("page", equalTo(page.toString()))
+                .withQueryParam("size", equalTo(pageSize.toString()))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody(expectedResponse)));
 
         // When
-        String result = this.experimentTools.getExperimentDesigns(teamKey);
+        String result = this.actionTools.getActions(page, pageSize);
 
         // Then
         assertThat(result).isEqualTo(expectedResponse);
-        wireMock.verify(getRequestedFor(urlPathEqualTo("/experiments"))
-                .withQueryParam("team", equalTo(teamKey)));
-    }
-
-    @Test
-    void getExperimentDesign() {
-        // Given
-        String expectedResponse = "TEST_RESPONSE";
-        String experimentKey = "ADM-123";
-
-        wireMock.stubFor(get(urlEqualTo("/experiments/" + experimentKey))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(expectedResponse)));
-
-        // When
-        String result = this.experimentTools.getExperimentDesign(experimentKey);
-
-        // Then
-        assertThat(result).isEqualTo(expectedResponse);
-        wireMock.verify(getRequestedFor(urlEqualTo("/experiments/" + experimentKey)));
+        wireMock.verify(getRequestedFor(urlPathEqualTo("/actions"))
+                .withQueryParam("page", equalTo(page.toString()))
+                .withQueryParam("size", equalTo(pageSize.toString())));
     }
 
 }
