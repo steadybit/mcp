@@ -48,7 +48,7 @@ jobs:
           curl --compressed https://static.snyk.io/cli/latest/snyk-linux -o snyk
           chmod +x ./snyk
           mv ./snyk /usr/local/bin/
-          snyk monitor --all-projects --prune-repeated-subdependencies --target-reference=${{ github.ref_name }}
+          snyk monitor --all-projects --prune-repeated-subdependencies --target-reference=latest
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
@@ -118,7 +118,7 @@ jobs:
         uses: snyk/actions/docker@master
         with:
           image: "${{ env.REGISTRY }}/steadybit/mcp:${{ github.ref_name }}"
-          args: --file=Dockerfile --target-reference=${{ github.ref_name }} --username=${{ github.actor }} --password=${{ secrets.GITHUB_TOKEN }}
+          args: --file=Dockerfile --target-reference=latest --username=${{ github.actor }} --password=${{ secrets.GITHUB_TOKEN }}
           command: monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
