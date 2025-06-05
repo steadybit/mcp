@@ -34,3 +34,4 @@ build/
 
 .sdkmanrc
 steadybit-mcp.log**
+.claude/
