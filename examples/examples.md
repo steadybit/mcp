@@ -19,6 +19,17 @@ consider the last 1000 executions.
 <a href="team-activity-6-trends-insights.png" target="_blank"><img src="team-activity-6-trends-insights.png" alt="Trends Insights" width="32%"></img></a>
 <a href="team-activity-7-recommendations.png" target="_blank"><img src="team-activity-7-recommendations.png" alt="Recommendations" width="32%"></img></a>
 
+## Team trends
+
+**Tool**: Claude Desktop using Claude Sonnet 4
+
+**Prompt**: Looking at the latest executions of team GITHUB, did the stability of executions improve in the last 2
+weeks, compared to the 2 weeks before? Please consider all executions.
+
+### Results
+
+<a href="team-trend-1.png" target="_blank"><img src="team-trend-1.png" alt="Team Trend" width="32%"></img></a>
+
 ## Experiment suggestions
 
 **Tool**: Claude Desktop using Claude Sonnet 4
