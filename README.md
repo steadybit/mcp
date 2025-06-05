@@ -172,6 +172,10 @@ to communicate with the MCP Clients. Have a look at the `steadybit-mcp.log` file
     mvn -Pnative native:compile
     ```
 
+## Example Usage
+
+You can find some example prompts [here](examples/examples.md).
+
 ## License
 
 This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software,
