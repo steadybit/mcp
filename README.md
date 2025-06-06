@@ -38,9 +38,6 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
         - `page` (number): Number of the requested page, default is 0
         - `pageSize` (number): Results per page, defaults to 50, maximum 100 is allowed
     - Returns: List of actions
-6. `get_api_spec`
-    - Get the API specification of the Steadybit platform
-    - Returns: The API specification in OpenAPI format
 
 ## Setup
 
