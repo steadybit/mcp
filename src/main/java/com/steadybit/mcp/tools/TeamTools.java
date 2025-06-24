@@ -26,7 +26,7 @@ public class TeamTools implements Tools {
             - A team will have access to one or more environments. (can be fetched using the `list_environments` tool)
             - A team has permissions to execute specified actions. (can be fetched using the `list_actions` tool)
             """)
-    public String getEnvironments() {
+    public String getTeams() {
         return this.restClient.get()
                 .uri("/teams")
                 .retrieve()
