@@ -79,6 +79,9 @@ If you want to create experiments, you need a team token for the team you want t
 
 - `API_TOKEN`: The API token to use for authentication. This is required.
 - `API_URL`: The URL of the Steadybit API. Default is `https://platform.steadybit.com/api`.
+- `CAPABILITIES_ENABLED_0`,`CAPABILITIES_ENABLED_1`,...: A comma-separated list of additional capabilities to enable.
+  The capabilities are:
+    - `CREATE_EXPERIMENT_FROM_TEMPLATE`: Enables the `create_experiment_from_template` tool.
 
 ### Usage with [Claude Desktop](https://claude.ai/download)
 
