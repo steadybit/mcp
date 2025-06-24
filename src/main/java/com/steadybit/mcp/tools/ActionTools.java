@@ -4,11 +4,12 @@
 
 package com.steadybit.mcp.tools;
 
+import com.steadybit.mcp.Tools;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.web.client.RestClient;
 
-public class ActionTools {
+public class ActionTools implements Tools {
 
     private final RestClient restClient;
 

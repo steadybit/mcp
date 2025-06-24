@@ -38,11 +38,42 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
         - `page` (number): Number of the requested page, default is 0
         - `pageSize` (number): Results per page, defaults to 50, maximum 100 is allowed
     - Returns: List of actions
+6. `list_environments`
+    - Get a list of environments
+    - Returns: List of environments
+7. `list_teams`
+    - Get a list of teams
+    - Returns: List of teams
+8. `list_experiment_schedules`
+    - Get a list of experiment schedules
+    - Optional inputs:
+        - `experiment` (list of string): Filter by one or more experiment keys
+        - `team` (list of string): Filter by one or more team keys
+    - Returns: List of experiment schedules
+9. `list_experiment_templates`
+    - Get a list of experiment templates (name and ids)
+10. `get_experiment_template`
+    - Get an experiment template including its design
+    - Required inputs:
+        - `templateId` (string): The id of the template to create an experiment from
+11. `create_experiment_from_template`
+    - Create an experiment from a template
+    - Needs to be enabled via environment variable, for example `CAPABILITIES_ENABLED_0=CREATE_EXPERIMENT_FROM_TEMPLATE`
+    - Required inputs:
+        - `templateId` (string): The id of the template to create an experiment from
+        - `environment` (string): The environment to use for the experiment
+        - `team` (string): The team to use for the experiment
+    - Optional inputs:
+        - `placeholders` (object): A map of placeholder keys and their values.
+        - `externalId` (string): An optional external id that can be used to update existing experiment designs.
+    - Returns: The key of the created experiment or an error message if the experiment could not be created
 
 ## Setup
 
 You need to have a Steadybit account and an API token. You can create an API token in the Steadybit platform under
 "Settings" → "API Access Tokens". Both token types, `Admin` or `Team` are supported.
+
+If you want to create experiments, you need a team token for the team you want to create experiments in.
 
 ### Supported ENV-Variables
 

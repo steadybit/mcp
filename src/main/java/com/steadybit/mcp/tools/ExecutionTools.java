@@ -4,6 +4,7 @@
 
 package com.steadybit.mcp.tools;
 
+import com.steadybit.mcp.Tools;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.web.client.RestClient;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExecutionTools {
+public class ExecutionTools implements Tools {
 
     private final RestClient restClient;
 

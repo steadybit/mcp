@@ -4,9 +4,7 @@
 
 package com.steadybit.mcp;
 
-import com.steadybit.mcp.tools.ActionTools;
-import com.steadybit.mcp.tools.ExecutionTools;
-import com.steadybit.mcp.tools.ExperimentTools;
+import com.steadybit.mcp.tools.*;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
@@ -17,9 +15,11 @@ import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
+
 @SpringBootConfiguration(proxyBeanMethods = false)
 @EnableAutoConfiguration
-@EnableConfigurationProperties(ApiProperties.class)
+@EnableConfigurationProperties({ApiProperties.class, CapabilitiesProperties.class})
 public class SteadybitMcpServerApplication {
 
     public static void main(String[] args) {
@@ -52,7 +52,27 @@ public class SteadybitMcpServerApplication {
     }
 
     @Bean
-    public ToolCallbackProvider weatherTools(ExperimentTools experimentTools, ExecutionTools executionTools, ActionTools actionTools) {
-        return MethodToolCallbackProvider.builder().toolObjects(experimentTools, executionTools, actionTools).build();
+    public EnvironmentTools environmentTools(RestClient restClient) {
+        return new EnvironmentTools(restClient);
+    }
+
+    @Bean
+    public TeamTools teamTools(RestClient restClient) {
+        return new TeamTools(restClient);
+    }
+
+    @Bean
+    public ExperimentScheduleTools experimentScheduleTools(RestClient restClient) {
+        return new ExperimentScheduleTools(restClient);
+    }
+
+    @Bean
+    public ExperimentTemplateTools experimentTemplateTools(RestClient restClient, CapabilitiesProperties capabilitiesProperties) {
+        return new ExperimentTemplateTools(restClient, capabilitiesProperties.getEnabled());
+    }
+
+    @Bean
+    public ToolCallbackProvider tools(List<Tools> tools) {
+        return MethodToolCallbackProvider.builder().toolObjects((Object[]) tools.toArray(new Tools[0])).build();
     }
 }

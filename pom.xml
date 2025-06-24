@@ -34,7 +34,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0-RC1</spring-ai.version>
+        <spring-ai.version>1.0.0</spring-ai.version>
         <revision>1.0.0-SNAPSHOT</revision>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <!-- Sonarcloud-->
