@@ -98,10 +98,10 @@ If you want to create experiments, you need a team token for the team you want t
           "--rm",
           "-e",
           "API_TOKEN",
-          "ghcr.io/steadybit/mcp:latest",
+          "ghcr.io/steadybit/mcp:latest"
         ],
         "env": {
-          "API_TOKEN": "<your-api-token>",
+          "API_TOKEN": "<your-api-token>"
         }
       }
     }
