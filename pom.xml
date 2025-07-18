@@ -44,6 +44,8 @@
             ${project.basedir}/**/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+        <commons-lang3.version>3.18.0</commons-lang3.version> <!-- remove whn included in spring boot -->
+        <tomcat.version>10.1.43</tomcat.version> <!-- remove whn included in spring boot -->
         <!--provide default empty argLine for surefire, is overridden by jacoco -->
         <argLine/>
     </properties>
