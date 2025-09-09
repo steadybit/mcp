@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.11
+
+- Updated dependencies
+
+## v0.0.10
+
+- Updated dependencies
+
+## v0.0.9
+
+- Updated dependencies
+
 ## v0.0.8
 
 - Updated dependencies to latest versions, fixing some CVE issues
