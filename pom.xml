@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <version>3.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -44,7 +44,6 @@
             ${project.basedir}/**/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
-        <commons-lang3.version>3.18.0</commons-lang3.version> <!-- remove whn included in spring boot -->
         <!--provide default empty argLine for surefire, is overridden by jacoco -->
         <argLine/>
     </properties>
