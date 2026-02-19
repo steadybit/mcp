@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.16
+
+- Updated dependencies
+
 ## v0.0.15
 
 - Updated dependencies
