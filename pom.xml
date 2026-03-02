@@ -46,9 +46,20 @@
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <!--provide default empty argLine for surefire, is overridden by jacoco -->
         <argLine/>
+
+        <!--  dependencies -->
+        <jackson-bom.version>2.21.1</jackson-bom.version> <!-- override spring boot due to GHSA-72hv-8253-57qq, remove when updated in spring boot -->
     </properties>
 
     <dependencies>
+        <dependency>
+            <!-- override spring boot due to GHSA-72hv-8253-57qq, remove when updated in spring boot -->
+            <groupId>com.fasterxml.jackson</groupId>
+            <artifactId>jackson-bom</artifactId>
+            <version>${jackson-bom.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
