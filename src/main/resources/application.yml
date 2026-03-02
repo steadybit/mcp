@@ -12,8 +12,6 @@ spring:
         stdio: true
 
 logging:
-  pattern:
-    console: ""
   file:
     name: "steadybit-mcp.log"
 
