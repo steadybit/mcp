@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-debian:24
+FROM azul/zulu-openjdk-debian:25
 
 ARG VERSION=unknown
 ARG REVISION=unknown
