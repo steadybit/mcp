@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.0.19
+## v0.0.20
 
 - Updated dependencies
 
