@@ -34,6 +34,8 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- override tomcat version, remove with the next spring boot update -->
+        <tomcat.version>10.1.54</tomcat.version>
         <spring-ai.version>1.1.4</spring-ai.version>
         <revision>1.0.0-SNAPSHOT</revision>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
