@@ -46,6 +46,9 @@
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <!--provide default empty argLine for surefire, is overridden by jacoco -->
         <argLine/>
+
+        <!-- dependencies -->
+        <tomcat.version>10.1.55</tomcat.version> <!-- override spring boot, may be removed once spring boot ships this version or newer (stay on 10.1.x — Spring Boot 3.5 targets Servlet 6.0, Tomcat 11 requires Servlet 6.1) -->
     </properties>
 
     <dependencies>
