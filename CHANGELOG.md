@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.24
+
+- Updated dependencies
+
+## v0.0.23
+
+- Updated dependencies
+
+## v0.0.22
+
+- Updated dependencies
+
 ## v0.0.21
 
 - Updated dependencies
