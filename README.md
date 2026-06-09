@@ -1,6 +1,6 @@
 # Steadybit MCP Server
 
-MCP Server for Steadybit, enabling LLM tools like Claude to interact with the Steadybit platform.
+MCP server for Steadybit, enabling LLM tools like Claude to interact with the Steadybit platform.
 
 ## Tools
 
@@ -70,148 +70,163 @@ MCP Server for Steadybit, enabling LLM tools like Claude to interact with the St
 
 ## Setup
 
-You need to have a Steadybit account and an API token. You can create an API token in the Steadybit platform under
-"Settings" → "API Access Tokens". Both token types, `Admin` or `Team` are supported.
+You need a Steadybit account and an API token. You can create an API token in the Steadybit platform under
+**Settings → API Access Tokens**. Both token types — `Admin` or `Team` — are supported.
 
 If you want to create experiments, you need a team token for the team you want to create experiments in.
 
-### Supported ENV-Variables
+### Supported environment variables
 
-- `API_TOKEN`: The API token to use for authentication. This is required.
-- `API_URL`: The URL of the Steadybit API. Default is `https://platform.steadybit.com/api`.
-- `CAPABILITIES_ENABLED_0`,`CAPABILITIES_ENABLED_1`,...: A comma-separated list of additional capabilities to enable.
-  The capabilities are:
+- `API_TOKEN`: The API token to use for authentication. **Required.**
+- `API_URL`: The URL of the Steadybit API. Defaults to `https://platform.steadybit.com/api`.
+- `CAPABILITIES_ENABLED_0`, `CAPABILITIES_ENABLED_1`, ...: Additional capabilities to enable. Currently supported:
     - `CREATE_EXPERIMENT_FROM_TEMPLATE`: Enables the `create_experiment_from_template` tool.
 
 ### Usage with [Claude Desktop](https://claude.ai/download)
 
-- Settings -> Developer -> Edit
-- Add the following JSON to the file, make sure to replace `<your-api-token>` with your actual API token.:
-  ```
-  {
-    "mcpServers": {
-      "steadybit": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "-e",
-          "API_TOKEN",
-          "ghcr.io/steadybit/mcp:latest"
-        ],
-        "env": {
-          "API_TOKEN": "<your-api-token>"
-        }
+In Claude Desktop go to **Settings → Developer → Edit** and add the following JSON, replacing `<your-api-token>`
+with your actual token:
+
+```json
+{
+  "mcpServers": {
+    "steadybit": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "API_TOKEN",
+        "ghcr.io/steadybit/mcp:latest"
+      ],
+      "env": {
+        "API_TOKEN": "<your-api-token>"
       }
     }
   }
-  ```
+}
+```
 
-## Development
+## Local Development
 
-Please note that there will be no logging to the console when running the MCP Server. The server uses STDIO transport
-to communicate with the MCP Clients. Have a look at the `steadybit-mcp.log` file to see the output of the server.
+### Prerequisites
 
-### Local Testing
+- Java 21+
+- Maven 3.9+
+- Docker (only required for the Docker image flow)
+- Node.js / `npx` (used to run the MCP inspector)
 
-- Build the project:
-    ```bash
-    mvn clean install
-    ```
+> The MCP server uses STDIO transport, so there is no console logging. Server output is written to `steadybit-mcp.log`
+> in the directory where you start the server.
 
-- Test with the MCP inspector:
-    - Launch the inspector:
-      ```bash
-      npx @modelcontextprotocol/inspector java -jar target/mcp-1.0.0-SNAPSHOT.jara -e API_URL=https://platform.steadybit.com/api -e API_TOKEN=123456
-      ```
-    - Logs can be found in `steadybit-mcp.log` located in the folder where you started the inspector.
+### Build
 
-- Use in [Claude Desktop](https://claude.ai/download)
-    - Settings -> Developer -> Edit
-    - Add something like below.
-    ```json
-    {
-      "mcpServers": {
-        "steadybit": {
-          "command": "/Users/danielreuter/.sdkman/candidates/java/current/bin/java",
-          "args": [
-            "-jar",
-            "/Users/danielreuter/.m2/repository/com/steadybit/mcp/1.0.0-SNAPSHOT/mcp-1.0.0-SNAPSHOT.jar"
-          ],
-          "env": {
-            "API_URL": "https://platform.steadybit.com/api",
-            "API_TOKEN": "123456",  
-            "LOGGING_FILE_NAME": "/Users/danielreuter/Library/Logs/Claude/steadybit-mcp-server.log"
-          }
-        }
-      }
-    }
-    ```
-    - MCP-Client-Logs can be found in `~/Library/Logs/Claude/mcp-server-steadybit.log`
-    - MCP-Server-Logs can be found in `~/Library/Logs/Claude/steadybit-mcp.log`, depending on the `LOGGING_FILE_NAME`
-      you set in the `env` section.
+```bash
+mvn clean install
+```
 
-### Building and testing the Docker image
+The resulting jar is at `target/mcp-<version>-SNAPSHOT.jar`.
 
-- Build the image:
-  ```bash
-  docker build -t steadybit/mcp -f Dockerfile . 
-  ```
+### Run locally with the MCP inspector
 
-- Create a file `config.json` with the following content:
-  ```json
-  {
-    "mcpServers": {
-      "steadybit": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "-e",
-          "API_TOKEN",
-          "-e",
-          "API_URL",
-          "steadybit/mcp"
-        ],
-        "env": {
-          "API_TOKEN": "123456",
-          "API_URL":"https://platform.steadybit.com/api"
-        }
+```bash
+npx @modelcontextprotocol/inspector \
+  java -jar target/mcp-1.0.0-SNAPSHOT.jar \
+  -e API_URL=https://platform.steadybit.com/api \
+  -e API_TOKEN=<your-api-token>
+```
+
+Logs are written to `steadybit-mcp.log` in the directory where you launched the inspector.
+
+### Run in Claude Desktop against your local jar
+
+Edit Claude Desktop's developer config (**Settings → Developer → Edit**) to point at your local Java binary and the
+freshly-built jar:
+
+```json
+{
+  "mcpServers": {
+    "steadybit": {
+      "command": "/path/to/your/java",
+      "args": [
+        "-jar",
+        "/path/to/your/.m2/repository/com/steadybit/mcp/1.0.0-SNAPSHOT/mcp-1.0.0-SNAPSHOT.jar"
+      ],
+      "env": {
+        "API_URL": "https://platform.steadybit.com/api",
+        "API_TOKEN": "<your-api-token>",
+        "LOGGING_FILE_NAME": "/path/to/Library/Logs/Claude/steadybit-mcp-server.log"
       }
     }
   }
-  ```
+}
+```
 
-- Run the inspector:
-  ```bash
-  npx @modelcontextprotocol/inspector --config config.json --server steadybit
-  ```
+- MCP-client logs: `~/Library/Logs/Claude/mcp-server-steadybit.log`
+- MCP-server logs: the path configured via `LOGGING_FILE_NAME` (defaults to `steadybit-mcp.log` next to the launcher)
 
-### Building a native image
+### Run tests
 
-- Install GraalVM 24.0.1 with the following command using sdkman:
-    ```bash
-    sdk install java 24.0.1-graalce
-    ```
+```bash
+mvn test
+```
 
-- Use the GraalVM version:
-    ```bash
-    sdk use java 24.0.1-graalce
-    ```
+### Build the Docker image
 
-- Build the native image:
-    ```bash
-    mvn -Pnative native:compile
-    ```
+```bash
+docker build -t steadybit/mcp -f Dockerfile .
+```
+
+Then create a `config.json` and run the inspector against the image:
+
+```json
+{
+  "mcpServers": {
+    "steadybit": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "API_TOKEN",
+        "-e",
+        "API_URL",
+        "steadybit/mcp"
+      ],
+      "env": {
+        "API_TOKEN": "<your-api-token>",
+        "API_URL": "https://platform.steadybit.com/api"
+      }
+    }
+  }
+}
+```
+
+```bash
+npx @modelcontextprotocol/inspector --config config.json --server steadybit
+```
+
+### Build a native image
+
+Install GraalVM 24.0.1 via sdkman:
+
+```bash
+sdk install java 24.0.1-graalce
+sdk use java 24.0.1-graalce
+```
+
+Then build with the `native` profile:
+
+```bash
+mvn -Pnative native:compile
+```
 
 ## Example Usage
 
-You can find some example prompts [here](examples/examples.md).
+Example prompts are in [`examples/examples.md`](examples/examples.md).
 
 ## License
 
-This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software,
-subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project
-repository.
+MIT — see [LICENSE](LICENSE) for details.
