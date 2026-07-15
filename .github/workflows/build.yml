@@ -101,7 +101,9 @@ jobs:
           images: "${{ env.REGISTRY }}/steadybit/mcp"
 
       - name: Build Docker image
-        uses: docker/build-push-action@v5 # NOSONAR githubactions:S7637 - verified action creator
+        uses: docker/build-push-action@v7 # NOSONAR githubactions:S7637 - verified action creator
+        env:
+          DOCKER_BUILD_RECORD_UPLOAD: "false"
         with:
           context: .
           file: Dockerfile
