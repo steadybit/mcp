@@ -1,5 +1,12 @@
 # Steadybit MCP Server
 
+> [!WARNING]
+> **Deprecated.** This standalone MCP server is no longer maintained. Use the hosted
+> [Remote MCP Server](https://docs.steadybit.com/integrate-with-steadybit/remote-mcp-server) that is built into the
+> Steadybit platform instead — it needs no local installation, supports OAuth, and covers considerably more tools
+> (environments, targets, actions, services, experiment design, suggestions, and run analysis).
+> See the [documentation](https://docs.steadybit.com/integrate-with-steadybit/remote-mcp-server) for setup instructions.
+
 MCP server for Steadybit, enabling LLM tools like Claude to interact with the Steadybit platform.
 
 ## Tools
